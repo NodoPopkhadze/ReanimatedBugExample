@@ -1,118 +1,89 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
   Text,
-  useColorScheme,
+  TextInput,
   View,
+  StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
-
+import ReanimatedScrollComponent from './ReanimatedScrollComponent';
+import KeyboardStickyView from './StickyView';
 import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+  GestureHandlerRootView,
+  TextInput as GestureTextInput,
+} from 'react-native-gesture-handler';
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <GestureHandlerRootView>
+      <View style={styles.container}>
+        <ReanimatedScrollComponent>
+          {new Array(10).fill(0).map((_, i) => (
+            <TextInput
+              style={styles.textInputStyle}
+              key={i}
+              placeholder={`TextInput#${i}`}
+              keyboardType={'default'}
+            />
+          ))}
+          <TouchableOpacity onPress={() => console.log('no log if you scroll')}>
+            <Text>button</Text>
+          </TouchableOpacity>
+          {new Array(5).fill(0).map((_, i) => (
+            <TextInput
+              style={styles.textInputStyle}
+              key={i}
+              placeholder={`TextInput#${i}`}
+              keyboardType={'default'}
+            />
+          ))}
+          {/* {new Array(10).fill(0).map((_, i) => (
+            <GestureTextInput
+              style={[styles.textInputStyle, styles.backgroundViolet]}
+              key={i}
+              placeholder={`Gesture TextInput#${i}`}
+              keyboardType={'default'}
+            />
+          ))} */}
+        </ReanimatedScrollComponent>
+        <KeyboardStickyView style={styles.stickyViewStyle}>
+          <TouchableOpacity>
+            <Text>Reanimated.View</Text>
+          </TouchableOpacity>
+        </KeyboardStickyView>
+      </View>
+    </GestureHandlerRootView>
   );
 }
 
+export default App;
+
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  textInputStyle: {
+    backgroundColor: 'purple',
+    height: 40,
+    marginTop: 20,
+    borderRadius: 10,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  stickyViewStyle: {
+    height: 100,
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  highlight: {
-    fontWeight: '700',
+  backgroundViolet: {
+    backgroundColor: 'red',
+  },
+  buttonStyle: {
+    height: 50,
+    width: 70,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'blue',
   },
 });
-
-export default App;
