@@ -37,14 +37,14 @@ function App(): React.JSX.Element {
               keyboardType={'default'}
             />
           ))}
-          {/* {new Array(10).fill(0).map((_, i) => (
+          {new Array(10).fill(0).map((_, i) => (
             <GestureTextInput
               style={[styles.textInputStyle, styles.backgroundViolet]}
               key={i}
               placeholder={`Gesture TextInput#${i}`}
               keyboardType={'default'}
             />
-          ))} */}
+          ))}
         </ReanimatedScrollComponent>
         <KeyboardStickyView style={styles.stickyViewStyle}>
           <TouchableOpacity>
